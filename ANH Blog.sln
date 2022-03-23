@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Entities", "Blog.Entit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.DataAccessLayer", "Blog.DataAccessLayer\Blog.DataAccessLayer.csproj", "{0D6F1BEC-B233-4D2E-A76A-25B47AE073B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.BusinessLayer", "Blog.BusinessLayer\Blog.BusinessLayer.csproj", "{66810E0F-6A6C-4B7C-A51B-F32A4A365E8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0D6F1BEC-B233-4D2E-A76A-25B47AE073B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D6F1BEC-B233-4D2E-A76A-25B47AE073B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D6F1BEC-B233-4D2E-A76A-25B47AE073B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66810E0F-6A6C-4B7C-A51B-F32A4A365E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66810E0F-6A6C-4B7C-A51B-F32A4A365E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66810E0F-6A6C-4B7C-A51B-F32A4A365E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66810E0F-6A6C-4B7C-A51B-F32A4A365E8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
