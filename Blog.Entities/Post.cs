@@ -5,7 +5,7 @@ namespace Blog.Entities
 {
     public class Post : EntitiesBase
     {
-        [Required, StringLength(50)]
+        [Required, StringLength(60)]
         public string Title { get; set; }
         [Required, StringLength(2000)]
         public string Text { get; set; }
