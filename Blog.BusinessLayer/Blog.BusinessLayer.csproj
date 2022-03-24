@@ -63,6 +63,10 @@
       <Project>{0d6f1bec-b233-4d2e-a76a-25b47ae073b7}</Project>
       <Name>Blog.DataAccessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Blog.Entities\Blog.Entities.csproj">
+      <Project>{4D4EE7F9-717A-45F3-B65C-4D79B3025FAA}</Project>
+      <Name>Blog.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

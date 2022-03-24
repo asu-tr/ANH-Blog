@@ -161,6 +161,14 @@
       <Project>{66810e0f-6a6c-4b7c-a51b-f32a4a365e8a}</Project>
       <Name>Blog.BusinessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Blog.DataAccessLayer\Blog.DataAccessLayer.csproj">
+      <Project>{0d6f1bec-b233-4d2e-a76a-25b47ae073b7}</Project>
+      <Name>Blog.DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blog.Entities\Blog.Entities.csproj">
+      <Project>{4d4ee7f9-717a-45f3-b65c-4d79b3025faa}</Project>
+      <Name>Blog.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

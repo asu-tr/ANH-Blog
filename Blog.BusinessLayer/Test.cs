@@ -8,11 +8,14 @@ namespace Blog.BusinessLayer
 {
     public class Test
     {
-        DataAccessLayer.BlogDbContext db = new DataAccessLayer.BlogDbContext();
+        
 
         public Test()
         {
-           db.Database.CreateIfNotExists();
+            //db.Database.CreateIfNotExists();
+
+            DataAccessLayer.BlogDbContext db = new DataAccessLayer.BlogDbContext();
+            db.Users.ToList();
         }
     }
 }

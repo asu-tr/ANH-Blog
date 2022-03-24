@@ -57,6 +57,7 @@
     <Compile Include="BlogDbContext.cs" />
     <Compile Include="BlogDbInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

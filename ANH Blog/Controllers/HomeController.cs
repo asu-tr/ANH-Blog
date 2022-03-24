@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blog.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace ANH_Blog.Controllers
         public ActionResult Index()
         {
             Blog.BusinessLayer.Test test = new Blog.BusinessLayer.Test();
+
             return View();
         }
     }
