@@ -10,6 +10,7 @@ namespace ANH_Blog.Controllers
     {
         public ActionResult Index()
         {
+            Blog.BusinessLayer.Test test = new Blog.BusinessLayer.Test();
             return View();
         }
     }
