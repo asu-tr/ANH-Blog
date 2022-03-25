@@ -1,4 +1,7 @@
-﻿
+﻿@using Blog.Entities
+
+@model List<Post>
+
 @{
     ViewBag.Title = "Index";
 }
@@ -8,17 +11,12 @@
     <div class="row">
 
         <div class="col-md-3">
-            <p class="lead">Shop Name</p>
-            <div class="list-group">
-                <a href="#" class="list-group-item">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
-            </div>
+            @Html.Partial("_PartialCategories")
         </div>
 
         <div class="col-md-9">
 
-            <div class="row carousel-holder">
+            @*<div class="row carousel-holder">
 
                 <div class="col-md-12">
                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -47,86 +45,98 @@
                     </div>
                 </div>
 
-            </div>
+            </div>*@
 
             <div class="row">
 
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4>
-                                <a href="#">First Product</a>
-                            </h4>
+                @foreach (Post post in Model)
+                {
+                    int sum = 0;
+                    double avr = 0;
 
-                            <h6>
-                                Category
-                            </h6>
-                            <h6>
-                                <span class="glyphicon glyphicon-user">Writer</span>
-                                <span class="glyphicon glyphicon-time pull-right">01.01.2022</span>
-                            </h6>
+                    if (post.Comments.Count > 0)
+                    {
+                        foreach (Comment c in post.Comments)
+                        {
+                            sum += c.Rating;
+                        }
 
-                            <p>See more snippets like this online store item at... <a target="_blank" href="#">Read More</a></p>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">15 reviews</p>
-                            <p>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </p>
+                        avr = sum / post.Comments.Count;
+                    }
+
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h4>
+                                    <a href="#">@post.Title</a>
+                                </h4>
+
+                                <h6>
+                                    @post.Category.Name
+                                </h6>
+                                <h6>
+                                    <span class="glyphicon glyphicon-user">@post.User.Username</span>
+                                    <span class="glyphicon glyphicon-time pull-right">@post.CreationDate</span>
+                                </h6>
+
+                                <p>@post.Text.Substring(0,180)<a target="_blank" href="#">... Read More</a></p>
+                            </div>
+                            <div class="ratings">
+                                <p class="pull-right">@post.Comments.Count reviews</p>
+                                <p>
+                                    @if (avr > 4)
+                                    {
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                    }
+                                    else if (avr > 3)
+                                    {
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    }
+                                    else if (avr > 2)
+                                    {
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    }
+                                    else if (avr > 1)
+                                    {
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    }
+                                    else if (avr == 1)
+                                    {
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    }
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$74.99</h4>
-                            <h4>
-                                <a href="#">Third Product</a>
-                            </h4>
-                            <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">31 reviews</p>
-                            <p>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$84.99</h4>
-                            <h4>
-                                <a href="#">Fourth Product</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is a short description. Lorem ipsum... <a target="_blank" href="#">Read More</a></p>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">6 reviews</p>
-                            <p>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                }
 
             </div>
 

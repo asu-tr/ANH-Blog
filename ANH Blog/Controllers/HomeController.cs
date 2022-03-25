@@ -1,4 +1,5 @@
-﻿using Blog.Entities;
+﻿using Blog.BusinessLayer;
+using Blog.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,32 @@ namespace ANH_Blog.Controllers
     {
         public ActionResult Index()
         {
-            Blog.BusinessLayer.Test test = new Blog.BusinessLayer.Test();
+            //old codes
+            //Blog.BusinessLayer.Test test = new Blog.BusinessLayer.Test();
+            //test.InsertTest();
+            //test.UpdateTest();
 
-            return View();
+            PostManagement pm = new PostManagement();
+
+            return View(pm.GetList());
+        }
+
+        public ActionResult Category(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+
+            Category category = CategoryManagement.GetCategory(id.Value);
+            return View("Index", category.Posts);
+        }
+
+        public ActionResult Popular()
+        {
+            PostManagement pm = new PostManagement();
+
+            return View ("Index", pm.GetList().OrderByDescending(p => p.Comments.Count).Take(6).ToList());
         }
     }
 }

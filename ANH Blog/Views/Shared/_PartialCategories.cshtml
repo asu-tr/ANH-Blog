@@ -1,0 +1,15 @@
+﻿@using Blog.BusinessLayer
+@using Blog.Entities
+
+@{ 
+    List<Category> listCat = CategoryManagement.GetList();
+}
+
+<p class="lead">Categories</p>
+<div class="list-group">
+    <a href="/Home/Index" class="list-group-item">All Categories</a>
+    @foreach (Category cat in listCat)
+    {
+        <a href="/Home/Category/@cat.Id" class="list-group-item">@cat.Name (@cat.Posts.Count)</a>
+    }
+</div>

@@ -1,9 +1,8 @@
-﻿using Blog.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Blog.DataAccessLayer
 {
@@ -11,15 +10,28 @@ namespace Blog.DataAccessLayer
     // Insert, Update, Delete, List
     public class Repository<T> where T : class
     {
-        BlogDbContext db = new BlogDbContext();
-        public List<T> List()
+        BlogDbContext db;
+        private DbSet<T> _dbSet;
+
+        public Repository()
         {
-            return db.Set<T>().ToList();
+            db = Singleton.CreateContext();
+            _dbSet = db.Set<T>();
         }
 
-        public int Insert(T objj)
+        public List<T> List()
         {
-            db.Set<T>().Add(objj);
+            return _dbSet.ToList();
+        }
+
+        public List<T> List(Expression<Func<T, bool>> exp)
+        {
+            return _dbSet.Where(exp).ToList();
+        }
+
+        public int Insert(T obj)
+        {
+            _dbSet.Add(obj);
             return Save();
         }
 
@@ -28,15 +40,21 @@ namespace Blog.DataAccessLayer
             return db.SaveChanges();
         }
 
-        public int Delete(T objj)
+        public int Delete(T obj)
         {
-            db.Set<T>().Remove(objj);
+            _dbSet.Remove(obj);
             return Save();
         }
 
         public int Update()
         {
             return Save();
+        }
+
+        public T Find(Expression<Func<T,bool>> exp)
+        {
+            T obj = _dbSet.FirstOrDefault(exp);
+            return obj;
         }
     }
 }
