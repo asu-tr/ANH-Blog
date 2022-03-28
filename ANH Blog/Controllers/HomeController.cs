@@ -14,17 +14,6 @@ namespace ANH_Blog.Controllers
         {
             return View();
         }
-        public ActionResult Index()
-        {
-            //old codes
-            //Blog.BusinessLayer.Test test = new Blog.BusinessLayer.Test();
-            //test.InsertTest();
-            //test.UpdateTest();
-
-            PostManagement pm = new PostManagement();
-
-            return View(pm.GetList().OrderByDescending(p => p.CreationDate).Take(9).ToList());
-        }
 
         public ActionResult Category(int? id)
         {
@@ -35,6 +24,18 @@ namespace ANH_Blog.Controllers
 
             Category category = CategoryManagement.GetCategory(id.Value);
             return View("Index", category.Posts);
+        }
+
+        public ActionResult Index()
+        {
+            //old codes
+            //Blog.BusinessLayer.Test test = new Blog.BusinessLayer.Test();
+            //test.InsertTest();
+            //test.UpdateTest();
+
+            PostManagement pm = new PostManagement();
+
+            return View(pm.GetList().OrderByDescending(p => p.CreationDate).Take(9).ToList());
         }
 
         public ActionResult Popular()
