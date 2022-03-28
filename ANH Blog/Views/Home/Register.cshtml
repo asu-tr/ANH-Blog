@@ -1,0 +1,50 @@
+﻿@model Blog.Entities.User
+
+<link href="~/Content/login.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Register";
+}
+
+@using (Html.BeginForm())
+{
+    <section class="login-info">
+        <div class="container">
+            <div class="row main">
+                <div class="form-header">
+                    <h1 class="text-center" style="color: #222222">ANH - SIGN UP</h1>
+                </div>
+                <div class="main-content">
+                    @Html.ValidationSummary(false)
+
+                    <div class="input-group ">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @placeholder = "Enter a username" })
+                    </div>
+
+                    <div class="input-group ">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Enter an e-mail" })
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Enter a password", @type = "password" })
+                    </div>
+
+                    <div class="form-group ">
+                        <button type="submit" class="btn btn-lg btn-block login-button">SIGN UP</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+<script>
+    $(function () {
+        $("footer").parent().hide();
+    });
+
+</script>

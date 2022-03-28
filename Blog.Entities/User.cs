@@ -6,9 +6,9 @@ namespace Blog.Entities
 {
     public class User : EntitiesBase
     {
-        [Required, StringLength(25)]
+        [Required, StringLength(25, ErrorMessage = "{0} needs to be max {1} characters.")]
         public string Username { get; set; }
-        [Required, StringLength(40)]
+        [StringLength(40)]
         public string Email { get; set; }
         [Required, MinLength(8), MaxLength(24)]
         public string Password { get; set; }

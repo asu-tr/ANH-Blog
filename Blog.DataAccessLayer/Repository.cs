@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blog.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -32,6 +33,12 @@ namespace Blog.DataAccessLayer
         public int Insert(T obj)
         {
             _dbSet.Add(obj);
+
+            if (obj is EntitiesBase)
+            {
+                EntitiesBase obj2 = obj as EntitiesBase;
+                obj2.CreationDate = DateTime.Now;
+            }
             return Save();
         }
 
