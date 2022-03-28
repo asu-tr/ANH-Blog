@@ -10,6 +10,10 @@ namespace ANH_Blog.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult About()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             //old codes
@@ -19,7 +23,7 @@ namespace ANH_Blog.Controllers
 
             PostManagement pm = new PostManagement();
 
-            return View(pm.GetList());
+            return View(pm.GetList().OrderByDescending(p => p.CreationDate).Take(9).ToList());
         }
 
         public ActionResult Category(int? id)
