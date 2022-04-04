@@ -1,6 +1,8 @@
-﻿@model Blog.Entities.User
+﻿@using Blog.Entities.ViewModels
+@model LogInVM
 
 <link href="~/Content/login.css" rel="stylesheet" />
+<link href="~/Content/validation-summary-css.css" rel="stylesheet" />
 
 @{
     ViewBag.Title = "Log In";
@@ -8,44 +10,45 @@
 
 @using (Html.BeginForm())
 {
-<section class="login-info">
-    <div class="container">
-        <div class="row main">
-            <div class="form-header">
-                <h1 class="text-center" style="color: #222222">ANH - LOG IN</h1>
-            </div>
-            <div class="main-content">
-                @Html.ValidationSummary(false)
-
-                <div class="input-group ">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @placeholder = "Enter your username" })
+    <section class="login-info">
+        <div class="container">
+            <div class="row main">
+                <div class="form-header">
+                    <h1 class="text-center" style="color: #222222">ANH - LOG IN</h1>
                 </div>
+                <div class="main-content">
+                    @Html.ValidationSummary(false)
 
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Enter your password", @type = "password" })
+                    <div class="input-group ">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @placeholder = "Enter your username" })
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Enter your password", @type = "password" })
+                    </div>
+
+                    <!-- under construction -->
+                    <div class="checkbox">
+                        <label class="remember">
+                            <input name="remember" type="checkbox"> Remember Me
+                        </label>
+                    </div>
+                    <!-- under construction -->
+
+                    <div class="form-group ">
+                        <button type="submit" class="btn btn-lg btn-block login-button">LOG IN</button>
+                    </div>
+
                 </div>
-
-                <div class="checkbox">
-                    <label class="remember">
-                        <input name="remember" type="checkbox"> Remember Me
-                    </label>
-                </div>
-
-                <div class="form-group ">
-                    <button type="submit" class="btn btn-lg btn-block login-button">LOG IN</button>
-                </div>
-
             </div>
         </div>
-    </div>
-</section>
+    </section>
 }
 
 <script>
     $(function () {
         $("footer").parent().hide();
     });
-
 </script>

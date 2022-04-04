@@ -1,14 +1,47 @@
 ﻿using Blog.BusinessLayer;
-using Blog.DataAccessLayer;
 using Blog.Entities;
+using Blog.Entities.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ANH_Blog.Controllers
 {
     public class HomeController : Controller
     {
+        UserManagement um = new UserManagement();
+
         public ActionResult About()
+        {
+            return View();
+        }
+
+        public ActionResult ActivateUser(Guid id)
+        {
+            ResultManagement<User> result = um.ActivateUser(id);
+
+            if (result.Results.Count > 0)
+            {
+                TempData["Error"] = result.Results;
+                return RedirectToAction("ActivationError");
+            }
+
+            return RedirectToAction("ActivationOK");
+        }
+
+        public ActionResult ActivationError()
+        {
+            List<string> errors = new List<string>();
+            if (TempData["Error"] != null)
+            {
+                errors = (List<string>)TempData["Error"];
+            }
+            return View(errors);
+        }
+
+        public ActionResult ActivationOK()
         {
             return View();
         }
@@ -16,9 +49,7 @@ namespace ANH_Blog.Controllers
         public ActionResult Category(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-            }
 
             Category category = CategoryManagement.GetCategory(id.Value);
             return View("Index", category.Posts);
@@ -26,13 +57,7 @@ namespace ANH_Blog.Controllers
 
         public ActionResult Index()
         {
-            //old codes
-            //Blog.BusinessLayer.Test test = new Blog.BusinessLayer.Test();
-            //test.InsertTest();
-            //test.UpdateTest();
-
             PostManagement pm = new PostManagement();
-
             return View(pm.GetList().OrderByDescending(p => p.CreationDate).Take(9).ToList());
         }
 
@@ -42,25 +67,103 @@ namespace ANH_Blog.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogIn(User u)
+        public ActionResult LogIn(LogInVM model)
         {
-            string username = u.Username;
-            string password = u.Password;
+            if (ModelState.IsValid)
+            {
+                UserManagement um = new UserManagement();
+                ResultManagement<User> result = um.LogIn(model);
 
-            BlogDbContext context = new BlogDbContext();
-
-            int count = context.Users.Where(s => s.Username == username && s.Password == password).ToList().Count;
-            if (count == 1)
-                return RedirectToAction("Index", "Home");
-
+                if (result.Results.Count > 0)
+                {
+                    result.Results.ForEach(x => ModelState.AddModelError("", x));
+                    return View(model);
+                }
+                Session["login"] = result.Obj;
+                return RedirectToAction("Index");
+            }
             return View();
+        }
+
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Popular()
         {
             PostManagement pm = new PostManagement();
-
             return View ("Index", pm.GetList().OrderByDescending(p => p.Comments.Count).Take(6).ToList());
+        }
+
+        public ActionResult ProfileDelete()
+        {
+            User user = (User)Session["login"];
+
+            ResultManagement<User> result = um.DeleteUser(user.Id);
+
+            if (result.Results.Count > 0)
+            {
+                // Redirect to error page
+            }
+            Session.Clear();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult ProfileEdit()
+        {
+            User user = (User)Session["login"];
+            ResultManagement<User> result = um.GetUser(user.Id);
+
+            if (result.Results.Count > 0)
+            {
+                // Redirect if there are some errors.
+            }
+
+            return View(result.Obj);
+        }
+
+        [HttpPost]
+        public ActionResult ProfileEdit(User user, HttpPostedFileBase profileimage)
+        {
+            ModelState.Remove("ModifiedUsername");
+
+            if (ModelState.IsValid)
+            {
+                if (profileimage != null && (profileimage.ContentType == "image/png" || profileimage.ContentType == "image/jpg" || profileimage.ContentType == "image/jpeg"))
+                {
+                    string fileName = $"user_{user.Id}.{profileimage.ContentType.Split('/')[1]}"; //user_1.jpg
+                    profileimage.SaveAs(Server.MapPath($"~/Image/{fileName}"));
+                    user.ProfileImageFile = fileName;
+                }
+
+                ResultManagement<User> result = um.UpdateUser(user);
+
+                if (result.Results.Count > 0)
+                {
+                    // return
+                }
+
+                Session["login"] = result.Obj;
+
+                return RedirectToAction("ProfileShow");
+            }
+            return View(user);
+        }
+
+        public ActionResult ProfileShow()
+        {
+            User user = (User)Session["login"];
+            ResultManagement<User> result = um.GetUser(user.Id);
+
+            if (result.Results.Count > 0)
+            {
+                // Redirect if there are some errors.
+            }
+
+            return View(result.Obj);
         }
 
         public ActionResult Register()
@@ -69,21 +172,26 @@ namespace ANH_Blog.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(User u)
+        public ActionResult Register(RegisterVM model)
         {
-            Repository<User> repoUser = new Repository<User>();
-            User user = repoUser.Find(x => x.Username == u.Username || x.Email == u.Email);
-
             if (ModelState.IsValid)
             {
                 UserManagement um = new UserManagement();
-                ErrorLayer err = um.SaveUser(u);
-            }
-            else
-            {
+                ResultManagement<User> result = um.SaveUser(model);
 
-            }
+                if (result.Results.Count > 0)
+                {
+                    result.Results.ForEach(x => ModelState.AddModelError("", x));
+                    return View(model);
+                }
 
+                return RedirectToAction("RegisterOK");
+            }
+            return View();
+        }
+
+        public ActionResult RegisterOK()
+        {
             return View();
         }
     }

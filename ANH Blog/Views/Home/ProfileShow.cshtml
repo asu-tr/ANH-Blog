@@ -1,0 +1,65 @@
+﻿@model Blog.Entities.User
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<div class="container">
+
+    <div class="row">
+        <h2>Your Profile</h2>
+        <hr />
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <img src="~/Image/@Model.ProfileImageFile"
+                 class="img-circle" width="130" height="130" />
+        </div>
+        <div class="col-md-8">
+
+            <h4>
+                <b>@Html.DisplayNameFor(m => m.Username) :</b>
+                @Model.Username
+            </h4>
+
+            <br />
+
+            <h4>
+                <b>@Html.DisplayNameFor(m => m.Email) :</b>
+                @Model.Email
+            </h4>
+
+            <br />
+
+        </div>
+
+        <div class="col-md-2">
+            <div class="btn-group">
+
+                <a href="#" class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-cog"></span>
+                    Options
+                    <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu">
+
+                    <li>
+                        <a href="/Home/ProfileEdit">
+                            <span class="glyphicon glyphicon-edit"></span>Edit Profile
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/Home/ProfileDelete"
+                           onclick="return confirm('Are you sure that you want to delete your account?')">
+                            <span class="glyphicon glyphicon-trash"></span>Delete Profile
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
