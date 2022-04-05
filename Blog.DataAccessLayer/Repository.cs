@@ -30,6 +30,11 @@ namespace Blog.DataAccessLayer
             return _dbSet.Where(exp).ToList();
         }
 
+        public IQueryable<T> ListQueryable()
+        {
+            return _dbSet.AsQueryable<T>();
+        }
+
         public int Insert(T obj)
         {
             _dbSet.Add(obj);

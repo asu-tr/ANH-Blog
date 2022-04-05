@@ -1,0 +1,73 @@
+﻿@model Blog.Entities.Post
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h2>Post Detail</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Text)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Text)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Comments.Count)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Comments.Count)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsDraft)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsDraft)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreationDate)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="col-md-10 col-md-offset-1">
+        <p>
+
+            <a href="/Post/Edit/@Model.Id" class="btn btn-warning " title="Edit">
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+
+            <a href="/Post/Index" class="btn btn-default " title="List">
+                <span class="glyphicon glyphicon-arrow-left"></span>List
+            </a>
+
+        </p>
+    </div>
+</div>
